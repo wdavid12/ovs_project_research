@@ -114,9 +114,11 @@ entry, (or even outside it in a global data structure). When
 `dpif_ipfix_cache_expire` is called, we will also send each packet in our
 linkes list to the same collector (different fixed port),
 using a minimal udp wrapper:
+
 	uint16_t flow_id;
 	uint32_t sample_seqnum;
 	uint8_t *data;
+
 In the future maybe we can add parameters to the `sample()` action in order to
 'turn off' the regular IPFIX packets and only send our own.
 Maybe we could also add ovsdb fields to configure the IP/port of our collector.
@@ -125,8 +127,8 @@ Maybe we could also add ovsdb fields to configure the IP/port of our collector.
 Again, we must keep a linked list of packets (__copies__ of course) in the flow
 cache entries. We will need to define a new IPFIX template to support sending
 the truncated packet itself. We can add a new function,
-`ipfix_send_packet_trunc` that will go over our linked list and send each of
-them as an IPFIX record.
+`ipfix_send_sampled_packet_msg` that will send each of our packets as an
+IPFIX record.
 
 Note that there is a global mutex that protects all of
 the data structures. This mutex is locked at the time of
