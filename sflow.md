@@ -61,14 +61,12 @@ and will invalidate the state in the kernel module (line 2027.)
 ### Really activating sFlow
 When a packet is first recieved, a miss upcall will happen (as described above)
 and `xlate_actions` from `ofproto/ofproto-dpif-xlate.c:6826` will be called.
-*TODO: How exactly do we reach this function?*
 
 If sFlow is eanbled, `compose_sflow_action` (line 7082) will be called.
 This is a wrapper around `compose_sample_action` (line 2917) where the real work happens.
-For every flow (*TODO: This could be the key! We can call this function only
-for specific flows!!!*) we are going to add an OVS_ACTION_ATTR_SAMPLE and
+For every flow we are going to add an OVS_ACTION_ATTR_SAMPLE and
 set the probability with OVS_SAMPLE_ATTR_PROBABILITY. Now inside a nested
-action (*TODO: learn more about a nested actions*) we add an OVS_ACTION_USERSPACE
+action we add an OVS_ACTION_USERSPACE
 with `odp_put_userspace_action`.
 - Note: All of this is done with functions like `nl_msg_put_u32` because we are
   building a binary netlink packet.
@@ -89,8 +87,6 @@ As stated earlier, the upcall will be handled by
 `ofproto/ofproto-dpif-upcall.c`.
 `process_upcall` on line 1351 will handle the SFLOW_UPCALL on line 1364 by
 finally calling `dpif_sflow_recieved`.
-*TODO: after `dpif_sflow_recieved` is called, how do we find the right sflow
-sampler? There is a seperate sampler per bridge!*
 
 ## Notes:
 - I have ignored some details with the sampling action. I think some cookie
