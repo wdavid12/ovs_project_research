@@ -48,6 +48,52 @@ packet itself, which means that we may be able to hook it in order to send the
 packet contents to the IPFIX collector. The function also recieves a `struct dpif_ipfix*`
 that is extracted from the corresponding bridge elsewhere.
 
+note that `dpif_ipfix_flow_sample` also accepts an argument of type `struct flow *`.
+This struct contains the parsed packet metadata, including src ip, dst ip
+and so on. This is very useful for our purposes (getting the "5-tuple").
+Here is the definition of `struct flow` from `include/openvswitch/flow.h`:
+```c
+struct flow {
+    /* Metadata */
+    struct flow_tnl tunnel;     /* Encapsulating tunnel parameters. */
+    ovs_be64 metadata;          /* OpenFlow Metadata. */
+    uint32_t regs[FLOW_N_REGS]; /* Registers. */
+    uint32_t skb_priority;      /* Packet priority for QoS. */
+    uint32_t pkt_mark;          /* Packet mark. */
+    uint32_t dp_hash;           /* Datapath computed hash value. The exact
+                                 * computation is opaque to the user space. */
+    union flow_in_port in_port; /* Input port.*/
+    uint32_t recirc_id;         /* Must be exact match. */
+    uint8_t ct_state;           /* Connection tracking state. */
+    uint8_t ct_nw_proto;        /* CT orig tuple IP protocol. */
+    uint16_t ct_zone;           /* Connection tracking zone. */
+    uint32_t ct_mark;           /* Connection mark.*/
+    ovs_be32 packet_type;       /* OpenFlow packet type. */
+    ovs_u128 ct_label;          /* Connection label. */
+    uint32_t conj_id;           /* Conjunction ID. */
+    ofp_port_t actset_output;   /* Output port in action set. */
+
+    /* L2, Order the same as in the Ethernet header! (64-bit aligned) */
+    struct eth_addr dl_dst;     /* Ethernet destination address. */
+    struct eth_addr dl_src;     /* Ethernet source address. */
+    ovs_be16 dl_type;           /* Ethernet frame type.
+                                   Note: This also holds the Ethertype for L3
+                                   packets of type PACKET_TYPE(1, Ethertype) */
+    uint8_t pad1[2];            /* Pad to 64 bits. */
+    union flow_vlan_hdr vlans[FLOW_MAX_VLAN_HEADERS]; /* VLANs */
+    ovs_be32 mpls_lse[ROUND_UP(FLOW_MAX_MPLS_LABELS, 2)]; /* MPLS label stack
+                                                             (with padding). */
+    /* L3 (64-bit aligned) */
+    ovs_be32 nw_src;            /* IPv4 source address or ARP SPA. */
+    ovs_be32 nw_dst;            /* IPv4 destination address or ARP TPA. */
+    ovs_be32 ct_nw_src;         /* CT orig tuple IPv4 source address. */
+    ovs_be32 ct_nw_dst;         /* CT orig tuple IPv4 destination address. */
+    struct in6_addr ipv6_src;   /* IPv6 source address. *
+    ovs_be32 pad3;              /* Pad to 64 bits. */
+};
+
+```
+
 ## dpif_ipfix_flow_sample()
 `dpif_ipfix_flow_sample` can be found in `ofproto/ofproto-dpif-ipfix.c` line 2752.
 We can see that the code approximates the number of matched packets using
