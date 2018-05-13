@@ -19,8 +19,8 @@ and so on. The defualt log level is "warn", which means that calls to lower log
 level functions such as `VLOG_DBG` and `VLOG_INFO` will be ignored.
 
 OVS also has an API for rate-limiting log messages. Most modules already
-utilize by creating a `struct vlog_rate_limit rl` which is initialized using
-`VLOG_RATE_LIMIT_INIT(RATE,BURST)`. Using the API is simple, simple call
+utilize it by creating a `struct vlog_rate_limit rl` which is initialized using
+`VLOG_RATE_LIMIT_INIT(RATE,BURST)`. Using the API is simple, just call
 
 ```c
 VLOG_WARN_RL(&rl, ...)
@@ -28,6 +28,13 @@ VLOG_WARN_RL(&rl, ...)
 
 instead of the usual `VLOG_WARN`. Up to `RATE` messages per minute will be
 allowed, with a maximum burst of `BURST` messages.
+
+## Per module configuration
+The log level can be adjusted per module using `ovs-appctl`.
+
+You can issue `ovs-appctl vlog/list` to list the known modules and their
+current level. Running `ovs-appctl vlog/set modulename dbg` will set the
+logging level to debug.
 
 # Printing packets
 One particularly useful function is `ofp_print_dp_packet`. The API can
