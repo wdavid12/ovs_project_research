@@ -1,0 +1,12 @@
+
+ovs|00030|ofproto_dpif_upcall(handler10)|WARN|ipfix upcall recieved: | packet 0x7fefda8f9810 | flow 0x7fefda903610 |
+ovs|00031|ipfix(handler10)|WARN|called dpif_ipfix_flow_sample, | packet: 0x7fefda8f9810 | flow: 0x7fefda903610 |
+ovs|00032|ipfix(handler10)|WARN|called dpif_ipfix_sample, | packet: 0x7fefda8f9810 | flow: 0x7fefda903610 | entry: 0x7fefd0005fb0 |
+ovs|00033|ipfix(handler10)|WARN|called ipfix_cache_update, | entry: 0x7fefd0005fb0 |
+
+May 13 19:00:13 omega ovs-vswitchd[26918]: icmp,vlan_tci=0x0000,dl_src=08:00:27:5e:f6:59,dl_dst=08:00:27:64:89:06,nw_src=10.0.0.1,nw_dst=10.0.0.2,nw_tos=0,nw_ecn=0,nw_ttl=64,icmp_type=0,icmp_code=0 icmp_csum:beed
+
+May 13 19:00:14 omega ovs-vswitchd[26918]: icmp,vlan_tci=0x0000,dl_src=08:00:27:64:89:06,dl_dst=08:00:27:5e:f6:59,nw_src=10.0.0.2,nw_dst=10.0.0.1,nw_tos=0,nw_ecn=0,nw_ttl=64,icmp_type=8,icmp_code=0 icmp_csum:d2e5
+
+
+

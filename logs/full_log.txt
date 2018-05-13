@@ -1,0 +1,7 @@
+-- Logs begin at Wed 2016-10-26 13:00:41 IDT, end at Sun 2018-05-13 19:01:07 IDT. --
+May 13 19:00:19 omega ovs-vswitchd[26918]: arp,vlan_tci=0x0000,dl_src=08:00:27:64:89:06,dl_dst=08:00:27:5e:f6:59,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,arp_op=1,arp_sha=08:00:27:64:89:06,arp_tha=00:00:00:00:00:00
+May 13 19:00:19 omega ovs-vswitchd[26918]: arp,vlan_tci=0x0000,dl_src=08:00:27:5e:f6:59,dl_dst=08:00:27:64:89:06,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,arp_op=2,arp_sha=08:00:27:5e:f6:59,arp_tha=08:00:27:64:89:06
+May 13 19:00:19 omega ovs-vswitchd[26918]: arp,vlan_tci=0x0000,dl_src=08:00:27:5e:f6:59,dl_dst=08:00:27:64:89:06,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,arp_op=1,arp_sha=08:00:27:5e:f6:59,arp_tha=00:00:00:00:00:00
+May 13 19:00:19 omega ovs-vswitchd[26918]: arp,vlan_tci=0x0000,dl_src=08:00:27:64:89:06,dl_dst=08:00:27:5e:f6:59,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,arp_op=2,arp_sha=08:00:27:64:89:06,arp_tha=08:00:27:5e:f6:59
+May 13 19:01:07 omega ovs-vswitchd[26918]: 2018-05-13T16:01:07Z|00034|connmgr|INFO|br0<->tcp:127.0.0.1: 2 flow_mods 54 s ago (2 adds)
+May 13 19:01:07 omega ovs-vswitchd[26918]: ovs|00034|connmgr|INFO|br0<->tcp:127.0.0.1: 2 flow_mods 54 s ago (2 adds)
