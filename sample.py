@@ -1,5 +1,10 @@
 import requests, itertools, sys
 
+try:
+    import readline
+except:
+    pass
+
 # main options
 API_URL= 'http://localhost:8080'
 ROUTING_TABLE = {
